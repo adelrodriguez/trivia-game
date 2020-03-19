@@ -1,24 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { useStoreActions } from './hooks';
+import { IntroScreen, QuizScreen, ResultsScreen } from './screens';
+import styles from './App.module.css';
 
 function App() {
+  const { getQuestions } = useStoreActions(actions => actions.questions);
+
+  useEffect(() => {
+    getQuestions();
+  }, [getQuestions]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={styles.app}>
+      <BrowserRouter>
+        <Switch>
+          <Route path="/quiz">
+            <QuizScreen />
+          </Route>
+          <Route path="/results">
+            <ResultsScreen />
+          </Route>
+          <Route path="/">
+            <IntroScreen />
+          </Route>
+        </Switch>
+      </BrowserRouter>
     </div>
   );
 }
