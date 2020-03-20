@@ -8,6 +8,7 @@ import { parseString } from '../utils';
 export interface QuestionsModel {
   // State
   loading: boolean;
+  error: boolean;
   questions: Question[];
   questionsById: Computed<
     QuestionsModel,
@@ -15,37 +16,58 @@ export interface QuestionsModel {
     StoreModel
   >;
   answers: Answer[];
-  result: Computed<QuestionsModel, number, StoreModel>;
+  results: Computed<QuestionsModel, Result[], StoreModel>;
+  score: Computed<QuestionsModel, number, StoreModel>;
   // Actions
-  setLoading: Action<QuestionsModel, boolean>;
+  showLoading: Action<QuestionsModel, boolean>;
+  showError: Action<QuestionsModel, boolean>;
   getQuestions: Thunk<QuestionsModel, void, Injections, StoreModel>;
   addQuestions: Action<QuestionsModel, ApiResponseDTO>;
   answerQuestion: Action<QuestionsModel, { answer: boolean; id: string }>;
+  reset: Action<QuestionsModel, void>;
 }
 
 export const questionsModel: QuestionsModel = {
   loading: false,
+  error: false,
   questions: [],
   questionsById: computed(state => keyBy(state.questions, 'id')),
   answers: [],
+  results: computed(state =>
+    state.answers.map(answer => ({
+      id: answer.id,
+      question: state.questionsById[answer.id].question,
+      answer: answer.answer,
+      correct: answer.correct,
+    }))
+  ),
 
-  result: computed(
+  score: computed(
     state => state.answers.filter(answer => answer.correct).length
   ),
 
-  setLoading: action((state, payload) => {
+  showLoading: action((state, payload) => {
     state.loading = payload;
+  }),
+
+  showError: action((state, payload) => {
+    state.error = payload;
   }),
 
   getQuestions: thunk(async (actions, _, { injections }) => {
     const { questionsService } = injections;
+    const { showLoading, showError, addQuestions } = actions;
 
     try {
+      showLoading(true);
+
       const { data } = await questionsService.get();
 
-      actions.addQuestions(data);
+      showLoading(false);
+
+      addQuestions(data);
     } catch (error) {
-      console.log(error);
+      showError(true);
     }
   }),
 
@@ -68,5 +90,14 @@ export const questionsModel: QuestionsModel = {
       answer,
       correct,
     });
+  }),
+
+  reset: action(state => {
+    state.loading = false;
+    state.error = false;
+    state.questions = [];
+    state.answers = [];
+    state.results = [];
+    state.score = 0;
   }),
 };
