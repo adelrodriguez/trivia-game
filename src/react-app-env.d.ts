@@ -24,3 +24,10 @@ interface Answer {
   answer: boolean;
   correct: boolean;
 }
+
+interface Result {
+  id: string;
+  question: string;
+  answer: boolean;
+  correct: boolean;
+}
