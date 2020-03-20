@@ -14,7 +14,7 @@ export function AnswerButton({ type, onPress }: Props) {
       positive={type === 'true'}
       negative={type === 'false'}
       onClick={onPress}
-      size="huge"
+      size="massive"
     />
   );
 }

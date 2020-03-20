@@ -17,7 +17,7 @@ export function QuestionStep({ step, steps, question, onAnswerPress }: Props) {
       <Header>{question.category}</Header>
       <QuestionCard text={question.question} />
       <div className={styles.progress}>
-        <Progress value={step} total={steps} indicating progress="percent" />
+        <Progress value={step} total={steps} progress="percent" indicating />
       </div>
       <div className={styles.buttons}>
         <AnswerButton type="true" onPress={() => onAnswerPress(true)} />

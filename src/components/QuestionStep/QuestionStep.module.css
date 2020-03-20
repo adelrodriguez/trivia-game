@@ -1,5 +1,6 @@
 .container {
   display: flex;
+  min-width: 400px;
   width: fit-content;
   flex-direction: column;
   justify-content: center;
@@ -15,4 +16,12 @@
   display: flex;
   justify-content: space-evenly;
   margin-top: 1rem;
+}
+
+@media (max-width: 576px) {
+  .container {
+    padding: 0 1rem;
+    min-width: 100%;
+    width: 100%;
+  }
 }

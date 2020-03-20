@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Transition, Card, Header } from 'semantic-ui-react';
 import styles from './QuestionCard.module.css';
 
@@ -7,14 +7,8 @@ interface Props {
 }
 
 export function QuestionCard({ text }: Props) {
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    setVisible(true);
-  }, []);
-
   return (
-    <Transition visible={visible} animation="scale" duration={500}>
+    <Transition animation="fade left" duration={1000} transitionOnMount>
       <Card centered className={styles.card}>
         <Card.Content textAlign="center" className={styles.content}>
           <Header>{text}</Header>
