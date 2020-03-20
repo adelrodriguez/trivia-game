@@ -1,5 +1,11 @@
 {
   "name": "trivia-game",
+  "author": {
+    "name": "Adel Rodriguez",
+    "email": "hello@adelrodriguez.com",
+    "url": "https://adelrodriguez.com/"
+  },
+  "homepage": "https://adelrodriguez.github.io/trivia-game",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -12,6 +18,7 @@
     "@types/react-dom": "^16.9.5",
     "axios": "^0.19.2",
     "easy-peasy": "^3.3.0",
+    "gh-pages": "^2.2.0",
     "lodash": "^4.17.15",
     "react": "^16.13.0",
     "react-albus": "^2.0.0",
@@ -30,7 +37,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9009 -s public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"

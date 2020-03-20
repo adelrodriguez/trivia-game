@@ -1,12 +1,12 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { HashRouter, Switch, Route } from 'react-router-dom';
 import { IntroScreen, QuizScreen, ResultsScreen } from './screens';
 import styles from './App.module.css';
 
 function App() {
   return (
     <div className={styles.app}>
-      <BrowserRouter>
+      <HashRouter>
         <Switch>
           <Route path="/quiz">
             <QuizScreen />
@@ -18,7 +18,7 @@ function App() {
             <IntroScreen />
           </Route>
         </Switch>
-      </BrowserRouter>
+      </HashRouter>
     </div>
   );
 }
